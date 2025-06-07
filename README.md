@@ -9,9 +9,9 @@ Standard config files for linting and testing are copied into place from a GitHu
 
 ## Scripts
 
--   `bin/fetch` - Fetch data files and put in `assets/data/` directory.
--   `bin/filter` - Filter the data for recent highly-rated movies.
--   `bin/print_stats` - Print statistics about titles and ratings.
+-   `bin/fetch.sh` - Fetch data files and put in `assets/data/` directory.
+-   `bin/filter.php` - Filter the data for recent highly-rated movies.
+-   `bin/print_stats.php` - Print statistics about titles and ratings.
 
 ### Using filter
 
@@ -24,7 +24,7 @@ popular movies that match your preferences.
 To use the script, run it from the command line with the desired options:
 
 ```
-./filter [options]
+./filter.php [options]
 ```
 
 #### Options
@@ -52,24 +52,24 @@ Here are a few examples of how to use the script with different options:
 1. Find movies released in 2010 or later:
 
     ```
-    ./filter --title-type movie --min-year 2010
+    ./filter.php --title-type movie --min-year 2010
     ```
 
 2. Find TV episodes in the "Documentary" genre:
 
     ```
-    ./filter --title-type tvEpisode --genre Documentary
+    ./filter.php --title-type tvEpisode --genre Documentary
     ```
 
 3. Find movies with an average rating of 8.0 or higher and at least 10,000 votes:
 
     ```
-    ./filter --title-type movie --min-rating 8.0 --min-votes 10000
+    ./filter.php --title-type movie --min-rating 8.0 --min-votes 10000
     ```
 
 4. Find animated movies released in 2015 or later with a minimum rating of 7.5:
     ```
-    ./filter --title-type movie --min-year 2015 --genre Animation --min-rating 7.5
+    ./filter.php --title-type movie --min-year 2015 --genre Animation --min-rating 7.5
     ```
 
 The script will output the filtered results, displaying the movie title, release year, average
