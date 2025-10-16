@@ -11,13 +11,11 @@ use DouglasGreen\OptParser\OptParser;
 use DouglasGreen\Utility\Data\ArgumentException;
 
 $optParser = new OptParser('IMDB Processor', 'Process IMDB non-commercial datasets');
-
 $optParser
     ->addParam(['min-year', 'y'], 'INT', 'Minimum year', static function (int $value): int {
         if ($value < 1900 || $value > date('Y')) {
             throw new ArgumentException('Year not within range: ' . $value);
         }
-
         return $value;
     })
     ->addParam(['title-type', 't'], 'STRING', 'Title type', static function (
@@ -29,7 +27,6 @@ $optParser
                     implode(', ', TitleBasicsLoader::VALID_TITLE_TYPES),
             );
         }
-
         return $value;
     })
     ->addParam(['genre', 'g'], 'STRING', 'Genre', static function (string $value): string {
@@ -39,7 +36,6 @@ $optParser
                     implode(', ', TitleBasicsLoader::VALID_GENRES),
             );
         }
-
         return $value;
     })
     ->addParam(['min-rating', 'r'], 'FLOAT', 'Minimum rating', static function (
@@ -48,14 +44,12 @@ $optParser
         if ($value < 0.0 || $value > 10.0) {
             throw new ArgumentException('Value not in range 0 to 10');
         }
-
         return $value;
     })
     ->addParam(['min-votes', 'v'], 'INT', 'Minimum votes', static function (int $value): int {
         if ($value < 1) {
             throw new ArgumentException('Value must be greater than 0');
         }
-
         return $value;
     })
     ->addFlag(['adult', 'a'], 'Include only adult films')
@@ -63,7 +57,6 @@ $optParser
     ->addUsageAll();
 
 $input = $optParser->parse();
-
 $minYear = $input->get('min-year');
 $titleType = $input->get('title-type');
 $genre = $input->get('genre');
@@ -71,30 +64,28 @@ $minRating = $input->get('min-rating');
 $minVotes = $input->get('min-votes');
 $adult = (bool) $input->get('adult');
 $sortByVotes = (bool) $input->get('sort-by-votes');
-
 $titleLoader = new TitleBasicsLoader(
     __DIR__ . '/../assets/data/title.basics.tsv.gz',
     static function ($row) use ($minYear, $titleType, $genre, $adult): bool {
         if ($minYear && $row['startYear'] < $minYear) {
             return false;
         }
-
         if ($titleType && $row['titleType'] !== $titleType) {
             return false;
         }
-
         if ($genre && is_array($row['genres']) && ! in_array($genre, $row['genres'], true)) {
             return false;
         }
-
         return ! ($adult && ! $row['isAdult']);
     },
     static fn($row): array => [
         'primaryTitle' => $row['primaryTitle'],
         'startYear' => $row['startYear'],
+        'titleType' => $row['titleType'],
         'genres' => $row['genres'],
     ],
 );
+
 $titles = $titleLoader->getData();
 
 $ratingLoader = new TitleRatingsLoader(
@@ -103,28 +94,28 @@ $ratingLoader = new TitleRatingsLoader(
         if (! isset($titles[$row['titleId']])) {
             return false;
         }
-
         if ($minRating && $row['averageRating'] < $minRating) {
             return false;
         }
-
         return ! ($minVotes && $row['numVotes'] < $minVotes);
     },
 );
-$ratings = $sortByVotes ? $ratingLoader->getTopVotedTitles() : $ratingLoader->getTopRatedTitles();
 
+$ratings = $sortByVotes ? $ratingLoader->getTopVotedTitles() : $ratingLoader->getTopRatedTitles();
 foreach ($ratings as $titleId => $rating) {
     $title = $titles[$titleId];
     $genres = $title['genres'];
     $primaryTitle = $title['primaryTitle'];
-    $startYear = $title['startYear'];
+    $startYear = $title['startYear'] ?? '';
+    $titleTypePrint = $title['titleType'];
     $averageRating = $rating['averageRating'];
     $numVotes = $rating['numVotes'];
     $genreDesc = $genres ? ' (' . implode(', ', $genres) . ')' : '';
     echo sprintf(
-        '%s (%s): %s * %s%s%s',
+        '%s (%s, %s): %s * %s%s%s',
         $primaryTitle,
         $startYear,
+        $titleTypePrint,
         $averageRating,
         $numVotes,
         $genreDesc,
