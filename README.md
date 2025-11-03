@@ -9,7 +9,7 @@ Standard config files for linting and testing are copied into place from a GitHu
 
 ## Scripts
 
--   `bin/fetch.sh` - Fetch data files and put in `assets/data/` directory.
+-   `bin/fetch.sh` - Fetch data files and put in `data/` directory.
 -   `bin/filter.php` - Filter the data for recent highly-rated movies.
 -   `bin/print_stats.php` - Print statistics about titles and ratings.
 
@@ -76,7 +76,7 @@ The script will output the filtered results, displaying the movie title, release
 rating, and number of votes for each matching movie.
 
 Note: Make sure you have the required IMDB data sets (`title.basics.tsv.gz` and
-`title.ratings.tsv.gz`) in the `assets/data` directory before running the script.
+`title.ratings.tsv.gz`) in the `data/` directory before running the script.
 
 ## Statistics
 

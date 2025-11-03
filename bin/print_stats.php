@@ -9,7 +9,7 @@ use DouglasGreen\Imdb\TitleBasicsLoader;
 use DouglasGreen\Imdb\TitleRatingsLoader;
 
 $titleLoader = new TitleBasicsLoader(
-    __DIR__ . '/../assets/data/title.basics.tsv.gz',
+    __DIR__ . '/../data/title.basics.tsv.gz',
     null,
     static fn($row): array => [
         'titleType' => $row['titleType'],
@@ -20,7 +20,7 @@ $titleLoader = new TitleBasicsLoader(
 );
 $titles = $titleLoader->getData();
 
-$ratingLoader = new TitleRatingsLoader(__DIR__ . '/../assets/data/title.ratings.tsv.gz');
+$ratingLoader = new TitleRatingsLoader(__DIR__ . '/../data/title.ratings.tsv.gz');
 $ratings = $ratingLoader->getData();
 $counts = [];
 $rates = [];

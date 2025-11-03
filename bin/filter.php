@@ -65,7 +65,7 @@ $minVotes = $input->get('min-votes');
 $adult = (bool) $input->get('adult');
 $sortByVotes = (bool) $input->get('sort-by-votes');
 $titleLoader = new TitleBasicsLoader(
-    __DIR__ . '/../assets/data/title.basics.tsv.gz',
+    __DIR__ . '/../data/title.basics.tsv.gz',
     static function ($row) use ($minYear, $titleType, $genre, $adult): bool {
         if ($minYear && $row['startYear'] < $minYear) {
             return false;
@@ -89,7 +89,7 @@ $titleLoader = new TitleBasicsLoader(
 $titles = $titleLoader->getData();
 
 $ratingLoader = new TitleRatingsLoader(
-    __DIR__ . '/../assets/data/title.ratings.tsv.gz',
+    __DIR__ . '/../data/title.ratings.tsv.gz',
     static function (array $row) use ($titles, $minRating, $minVotes): bool {
         if (! isset($titles[$row['titleId']])) {
             return false;
