@@ -2,7 +2,6 @@ package imdb
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
