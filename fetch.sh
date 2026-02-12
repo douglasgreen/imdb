@@ -24,4 +24,4 @@ wget https://datasets.imdbws.com/title.principals.tsv.gz
 echo "Fetching title.ratings.tsv"
 wget https://datasets.imdbws.com/title.ratings.tsv.gz
 
-mv *.tsv.gz ../data
+mv *.tsv.gz data

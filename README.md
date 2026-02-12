@@ -2,20 +2,25 @@
 
 Process [IMDb non-commercial datasets](https://developer.imdb.com/non-commercial-datasets/).
 
-## Project setup
+## Go usage
 
-Standard config files for linting and testing are copied into place from a GitHub repository called
-[utility](https://github.com/douglasgreen/utility). See that project's README page for details.
+### Build
+go build ./cmd/filter
+go build ./cmd/printstats
+
+### Run
+./filter --title-type movie --min-year 2010
+./printstats
 
 ## Scripts
 
--   `bin/fetch.sh` - Fetch data files and put in `data/` directory.
--   `bin/filter.php` - Filter the data for recent highly-rated movies.
--   `bin/print_stats.php` - Print statistics about titles and ratings.
+-   `./fetch.sh` - Fetch data files and put in `data/` directory.
+-   `./filter` - Filter the data for recent highly-rated movies.
+-   `./printstats` - Print statistics about titles and ratings.
 
 ### Using filter
 
-This PHP script, `filter`, allows you to filter the IMDB data sets and find recent highly rated
+This command, `filter`, allows you to filter the IMDB data sets and find recent highly rated
 movies based on various criteria. It provides a convenient way to explore the IMDB data and discover
 popular movies that match your preferences.
 
@@ -24,7 +29,7 @@ popular movies that match your preferences.
 To use the script, run it from the command line with the desired options:
 
 ```
-./filter.php [options]
+./filter [options]
 ```
 
 #### Options
@@ -52,24 +57,24 @@ Here are a few examples of how to use the script with different options:
 1. Find movies released in 2010 or later:
 
     ```
-    ./filter.php --title-type movie --min-year 2010
+    ./filter --title-type movie --min-year 2010
     ```
 
 2. Find TV episodes in the "Documentary" genre:
 
     ```
-    ./filter.php --title-type tvEpisode --genre Documentary
+    ./filter --title-type tvEpisode --genre Documentary
     ```
 
 3. Find movies with an average rating of 8.0 or higher and at least 10,000 votes:
 
     ```
-    ./filter.php --title-type movie --min-rating 8.0 --min-votes 10000
+    ./filter --title-type movie --min-rating 8.0 --min-votes 10000
     ```
 
 4. Find animated movies released in 2015 or later with a minimum rating of 7.5:
     ```
-    ./filter.php --title-type movie --min-year 2015 --genre Animation --min-rating 7.5
+    ./filter --title-type movie --min-year 2015 --genre Animation --min-rating 7.5
     ```
 
 The script will output the filtered results, displaying the movie title, release year, average
